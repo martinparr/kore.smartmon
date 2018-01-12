@@ -1,0 +1,2 @@
+# smartmon
+SMARTMON configuration scripting
