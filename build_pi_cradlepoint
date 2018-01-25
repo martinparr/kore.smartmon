@@ -82,6 +82,7 @@ echo sudo route add -host $var_dns2 gw $var_mdm >> /home/pi/1_routes
 
 sudo sed -i "20i /home/pi/ssh_start &" /etc/rc.local
 sudo sed -i "21i /home/pi/1_routes &" /etc/rc.local
+sudo sed -i "22i /sbin/shutdown -r 01:00 &" /etc/rc.local
 
 #! Configure Hostname
 
