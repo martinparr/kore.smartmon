@@ -1,0 +1,8 @@
+#!/bin/bash
+avg_dload=`curl -v http://52.56.99.9/output.file -w %{speed_download} -s -o /dev/null`
+echo "Statistic.avg_dload:$avg_dload"
+if expr $avg_dload '>' 0 1>/dev/null; then
+exit 0
+else
+exit 1
+fi
