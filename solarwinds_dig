@@ -1,0 +1,8 @@
+#!/bin/bash
+google_response=`dig @172.16.1.102 www.google.co.uk | grep "Query time:" |awk '{print $4}'`
+echo "Statistic.google_response:${google_response%.*}"
+if expr ${google_response%.*} '<' 5000 1>/dev/null; then
+ exit 0
+else
+ exit 1
+fi
