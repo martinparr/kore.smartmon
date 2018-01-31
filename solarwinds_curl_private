@@ -1,0 +1,8 @@
+#!/bin/bash
+time_total_load=`curl http://172.31.241.14 -w %{time_total} -s -o /dev/null -m15`
+echo "Statistic.total_time:${time_total_load%.*}"
+if expr ${time_total_load%.*} '<' 10 1>/dev/null; then
+ exit 0
+else
+ exit 1
+fi
