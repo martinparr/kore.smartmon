@@ -11,6 +11,6 @@ read var_mdm_pass
 #! Configure 9_mdm_reset
 
 sudo touch /home/pi/9_mdm_reset
-sudo chmod 777 /home/pi/9_mem_reset
+sudo chmod 777 /home/pi/9_mdm_reset
 
 echo sshpass -p "$var_mdm_pass" ssh -o StrictHostKeyChecking=no admin@$var_mdm set /control/wan/devices/mdm*/reset true >> /home/pi/9_mdm_reset
