@@ -1,0 +1,11 @@
+#!/bin/bash
+curl http://52.56.99.9 -s >/dev/null
+if [ $? = !0 ]; then
+ echo "Statistic.total_time:500}"
+ exit 1
+else
+ time_total_load=`curl http://52.56.99.9 -w %{time_total} -s -o /dev/null -m55`
+ ./9_mdm_reset 
+ echo "Statistic.total_time:${time_total_load%.*}"
+ exit 0
+fi
