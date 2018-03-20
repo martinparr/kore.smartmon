@@ -1,0 +1,13 @@
+#!/bin/bash
+endpoint_ip=52.56.99.9
+time_total_load=`curl http://$endpoint_ip -w %{time_total} -s -o /dev/null -m20`
+OUT=$( curl -qSfsw '\n%{http_code}' http://$endpoint_ip ) 2>/dev/null
+RET=$?
+./9_mdm_reset
+if [[ $RET -ne 0 ]] ; then
+    echo "Statistic.HTTPStatus: $(echo "$OUT" | tail -n1 )"
+    exit 1
+else
+    echo "Statistic.total_time:${time_total_load%.*}"
+    exit 0
+fi
