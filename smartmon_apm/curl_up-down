@@ -1,0 +1,22 @@
+# get output, append HTTP status code in separate line, discard error message
+OUT=$( curl -qSfsw '\n%{http_code}' http://52.56.99.9 ) 2>/dev/null
+
+# get exit code
+RET=$?
+./9_mdm_reset
+if [[ $RET -ne 0 ]] ; then
+    # if error exit code, print exit code
+#    echo "Error $RET"
+
+    # print HTTP error
+    echo "Statistic.HTTPStatus: $(echo "$OUT" | tail -n1 )"
+    exit 1
+else
+    # otherwise print last line of output, i.e. HTTP status code
+#    echo "Success, HTTP status is:"
+    echo "Statistic.HTTPstatus: $( echo "$OUT" | tail -n1 )"
+    exit 0
+    # and print all but the last line, i.e. the regular response
+    # echo "Response is:"
+    # echo "$OUT" | head -n-1
+fi
