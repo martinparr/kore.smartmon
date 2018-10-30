@@ -22,7 +22,7 @@ read var_ipaddr
 echo "What is the Subnet Mask of this PI (CIDR notation)?"
 read var_mask
 
-echo "What is the Default Gateway of this PI?"
+echo "What is the LAN Default Gateway of this PI?"
 read var_defgw
 
 echo "What is the IP Address of your Modem?"
@@ -104,18 +104,25 @@ sudo systemctl restart snmpd
 
 #! Configure CURL routes
 
-sudo touch /home/pi/1_routes
-sudo chmod 777 /home/pi/1_routes
+#! sudo touch /home/pi/1_routes
+#! sudo chmod 777 /home/pi/1_routes
 
-echo sudo route add -host $var_pubcurl gw $var_mdm >> /home/pi/1_routes
-echo sudo route add -host $var_privcurl gw $var_mdm >> /home/pi/1_routes
-echo sudo route add -host $var_dns1 gw $var_mdm >> /home/pi/1_routes
-echo sudo route add -host $var_dns2 gw $var_mdm >> /home/pi/1_routes
+#! echo sudo route add -host $var_pubcurl gw $var_mdm >> /home/pi/1_routes
+#! echo sudo route add -host $var_privcurl gw $var_mdm >> /home/pi/1_routes
+#! echo sudo route add -host $var_dns1 gw $var_mdm >> /home/pi/1_routes
+#! echo sudo route add -host $var_dns2 gw $var_mdm >> /home/pi/1_routes
+
+#! Configure MGMT routes
+
+sudo touch /lib/dhcpcd/dhcpcd-hooks/40-route
+sudo chmod 777 /lib/dhcpcd/dhcpcd-hooks/40-route
+
+echo ip route add 192.168.0.0/16 via $var_defgw
 
 #! Build rc.local
 
 sudo sed -i "20i sudo /home/pi/ssh_start &" /etc/rc.local
-sudo sed -i "21i sudo /home/pi/1_routes &" /etc/rc.local
+sudo sed -i "21i /sbin/shutdown -r 01:00 &" /etc/rc.local
 #!  if [$var_monitor -gt 2]; then
 #!      sudo sed -i "22i /sbin/shutdown -r 01:00 &" /etc/rc.local
 #! else
@@ -132,7 +139,7 @@ sudo echo "persistent" >> /etc/dhcpcd.conf
 sudo echo "# Static IP Configuration" >> /etc/dhcpcd.conf
 sudo echo "interface eth0" >> /etc/dhcpcd.conf
 sudo echo "static ip_address=$var_ipaddr/$var_mask" >> /etc/dhcpcd.conf
-sudo echo "static routers=$var_defgw" >> /etc/dhcpcd.conf
+sudo echo "static routers=$var_mdm" >> /etc/dhcpcd.conf
 sudo echo "static domain_name_servers=8.8.8.8" >> /etc/dhcpcd.conf
 
 #! Configure Hostname
