@@ -117,12 +117,12 @@ sudo systemctl restart snmpd
 sudo touch /lib/dhcpcd/dhcpcd-hooks/40-route
 sudo chmod 777 /lib/dhcpcd/dhcpcd-hooks/40-route
 
-echo ip route add 192.168.0.0/16 via $var_defgw
+echo ip route add 192.168.0.0/16 via $var_defgw >> /lib/dhcpcd/dhcpcd-hooks/40-route
 
 #! Build rc.local
 
 sudo sed -i "20i sudo /home/pi/ssh_start &" /etc/rc.local
-sudo sed -i "21i /sbin/shutdown -r 01:00 &" /etc/rc.local
+sudo sed -i "21i sudo /sbin/shutdown -r 01:00 &" /etc/rc.local
 #!  if [$var_monitor -gt 2]; then
 #!      sudo sed -i "22i /sbin/shutdown -r 01:00 &" /etc/rc.local
 #! else
