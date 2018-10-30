@@ -7,3 +7,98 @@ set config/system/
             "frequency": "weekly",
             "time": "1:00 AM"
 
+
+
+
+admin@192.168.49.66's password:
+[admin@IBR350-cbf: /]$ cd config/system/snmp/
+[admin@IBR350-cbf: /config/system/snmp]$ ls
+snmp_version         fw_upgrade_redirect  persisted_config     enabled              auth_mode            lan_port             trap_address
+snmp_on_lan          user                 snmp_on_wan          wan_port             persist_needed       password             trap_port
+traps_enabled
+[admin@IBR350-cbf: /config/system/snmp]$ get enabled
+false
+[admin@IBR350-cbf: /config/system/snmp]$ set enabled /true
+Invalid value: No JSON object could be decoded
+[admin@IBR350-cbf: /config/system/snmp]$ set enabled true
+Error: invalid value ({'snmp_version': 'SNMPv1', 'fw_upgrade_redirect': '', 'trap_port': 162, 'enabled': False, 'auth_mode': 'MD5', 'lan_port': 161, 'trap_address': '', 'snmp_on_lan': False, 'user': '', 'snmp_on_wan': False, 'wan_port': 161, 'persist_needed': False, 'password': '$1$1898aeaf$nGjQtE0HHzXMqPtKazPzCg==', 'persisted_config': ' ', 'traps_enabled': False}) at: ['config', 'system', 'snmp']
+Reason: SNMP needs to be configured to run the LAN and/or the WAN.
+[admin@IBR350-cbf: /config/system/snmp]$ set enabled true snmp_on_lan true
+Invalid value: Extra data: line 1 column 6 - line 1 column 22 (char 5 - 21)
+[admin@IBR350-cbf: /config/system/snmp]$ set enabled true
+Error: invalid value ({'snmp_version': 'SNMPv1', 'fw_upgrade_redirect': '', 'persisted_config': ' ', 'enabled': False, 'auth_mode': 'MD5', 'lan_port': 161, 'trap_address': '', 'snmp_on_lan': False, 'user': '', 'snmp_on_wan': False, 'wan_port': 161, 'persist_needed': False, 'password': '$1$1898aeaf$nGjQtE0HHzXMqPtKazPzCg==', 'trap_port': 162, 'traps_enabled': False}) at: ['config', 'system', 'snmp']
+Reason: SNMP needs to be configured to run the LAN and/or the WAN.
+[admin@IBR350-cbf: /config/system/snmp]$
+[admin@IBR350-cbf: /config/system/snmp]$
+[admin@IBR350-cbf: /config/system/snmp]$ set snmp_on_lan true
+[admin@IBR350-cbf: /config/system/snmp]$ set enabled true
+Error: invalid value ({'snmp_version': 'SNMPv1', 'fw_upgrade_redirect': '', 'trap_port': 162, 'enabled': False, 'auth_mode': 'MD5', 'lan_port': 161, 'trap_address': '', 'snmp_on_lan': True, 'user': '', 'snmp_on_wan': False, 'wan_port': 161, 'persist_needed': False, 'password': '$1$1898aeaf$nGjQtE0HHzXMqPtKazPzCg==', 'persisted_config': ' ', 'traps_enabled': False}) at: ['config', 'system', 'snmp']
+Reason: Public community string isn't set
+[admin@IBR350-cbf: /config/system/snmp]$
+[admin@IBR350-cbf: /config/system/snmp]$
+[admin@IBR350-cbf: /config/system/snmp]$ ls
+snmp_version         fw_upgrade_redirect  trap_port            enabled              auth_mode            lan_port             trap_address
+snmp_on_lan          user                 snmp_on_wan          wan_port             persist_needed       password             persisted_config
+traps_enabled
+[admin@IBR350-cbf: /config/system/snmp]$ set snmp_version v2c
+Invalid value: No JSON object could be decoded
+[admin@IBR350-cbf: /config/system/snmp]$ set snmp_version true
+Error: invalid value (True) at: ['config', 'system', 'snmp', 'snmp_version']
+Reason: not a string
+[admin@IBR350-cbf: /config/system/snmp]$ set snmp_version
+Missing value argument(s)
+Set a value to a config item
+Usage: set PATH VALUE
+[admin@IBR350-cbf: /config/system/snmp]$ set snmp_version SNMPv2c
+Invalid value: No JSON object could be decoded
+[admin@IBR350-cbf: /config/system/snmp]$ set snmp_version SNMPv2c true
+Invalid value: No JSON object could be decoded
+[admin@IBR350-cbf: /config/system/snmp]$ set snmp_version "SNMPv2c"
+[admin@IBR350-cbf: /config/system/snmp]$ set enabled
+Missing value argument(s)
+Set a value to a config item
+Usage: set PATH VALUE
+[admin@IBR350-cbf: /config/system/snmp]$ set enabled true
+Error: invalid value ({'snmp_version': 'SNMPv2c', 'fw_upgrade_redirect': '', 'trap_port': 162, 'enabled': False, 'auth_mode': 'MD5', 'lan_port': 161, 'trap_address': '', 'snmp_on_lan': True, 'user': '', 'snmp_on_wan': False, 'wan_port': 161, 'persist_needed': False, 'password': '$1$1898aeaf$nGjQtE0HHzXMqPtKazPzCg==', 'persisted_config': ' ', 'traps_enabled': False}) at: ['config', 'system', 'snmp']
+Reason: Public community string isn't set
+[admin@IBR350-cbf: /config/system/snmp]$
+[admin@IBR350-cbf: /config/system/snmp]$
+[admin@IBR350-cbf: /config/system/snmp]$
+[admin@IBR350-cbf: /config/system/snmp]$ set get_community "kore_RO"
+[admin@IBR350-cbf: /config/system/snmp]$ set set_community "2l2lkj2lj2;3l2k"
+[admin@IBR350-cbf: /config/system/snmp]$
+[admin@IBR350-cbf: /config/system/snmp]$
+[admin@IBR350-cbf: /config/system/snmp]$ set enabled true
+[admin@IBR350-cbf: /config/system/snmp]$
+[admin@IBR350-cbf: /config/system/snmp]$
+[admin@IBR350-cbf: /config/system/snmp]$ ls
+snmp_version         get_community        fw_upgrade_redirect  set_community        trap_port            enabled              auth_mode
+lan_port             trap_address         snmp_on_lan          user                 snmp_on_wan          wan_port             persist_needed
+password             persisted_config     traps_enabled
+[admin@IBR350-cbf: /config/system/snmp]$
+[admin@IBR350-cbf: /config/system/snmp]$
+[admin@IBR350-cbf: /config/system/snmp]$ set sys_name "USSAL-MDM-TMO2"
+[admin@IBR350-cbf: /config/system/snmp]$ ls
+snmp_version         get_community        fw_upgrade_redirect  sys_name             set_community        trap_port            enabled
+auth_mode            lan_port             trap_address         snmp_on_lan          user                 snmp_on_wan          wan_port
+persist_needed       password             persisted_config     traps_enabled
+[admin@IBR350-cbf: /config/system/snmp]$ get
+{
+    "auth_mode": "MD5",
+    "enabled": true,
+    "fw_upgrade_redirect": "",
+    "get_community": "kore_RO",
+    "lan_port": 161,
+    "password": "$1$1898aeaf$nGjQtE0HHzXMqPtKazPzCg==",
+    "persist_needed": false,
+    "persisted_config": "#",
+    "set_community": "2l2lkj2lj2;3l2k",
+    "snmp_on_lan": true,
+    "snmp_on_wan": false,
+    "snmp_version": "SNMPv2c",
+    "sys_name": "USSAL-MDM-TMO2",
+    "trap_address": "",
+    "trap_port": 162,
+    "traps_enabled": false,
+    "user": "",
+    "wan_port": 161
